@@ -1,4 +1,8 @@
-const apiBaseUrl = import.meta.env.VITE_API_BASE_URL ?? '/api'
+const configuredBaseUrl = import.meta.env.VITE_API_BASE_URL
+const apiBaseUrl =
+  typeof configuredBaseUrl === 'string' && configuredBaseUrl.trim().length > 0
+    ? configuredBaseUrl
+    : '/api'
 
 export const config = {
   apiBaseUrl,

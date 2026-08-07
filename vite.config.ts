@@ -20,6 +20,7 @@ function mockChatApiPlugin(): Plugin {
 }
 
 export default defineConfig({
+  base: process.env.VITE_BASE_PATH ?? '/',
   plugins: [react(), mockChatApiPlugin()],
   test: {
     environment: 'node',

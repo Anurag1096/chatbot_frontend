@@ -62,3 +62,37 @@ server/           Dev-only mock SSE backend
 public/           Static assets
 vite.config.ts    Vite + mock API middleware
 ```
+
+## GitHub Pages deployment
+
+The repo includes a GitHub Actions workflow (`.github/workflows/deploy.yml`) that runs tests, builds, and deploys to GitHub Pages on every push to `main` or `master`.
+
+### One-time setup
+
+1. Open your repo on GitHub → **Settings** → **Pages**
+2. Under **Build and deployment**, set **Source** to **GitHub Actions**
+3. Push to `main`/`master` (or run the workflow manually from **Actions**)
+
+Your site will be published at:
+
+`https://<username>.github.io/chatbot_frontend/`
+
+### Backend on production
+
+The Vite mock API only runs in local dev. On GitHub Pages the app is static, so chat requests need a real backend.
+
+Set a repository variable (**Settings** → **Secrets and variables** → **Actions** → **Variables**):
+
+| Variable | Example |
+|----------|---------|
+| `VITE_API_BASE_URL` | `https://your-api.example.com/api` |
+
+Your backend must allow CORS from your GitHub Pages origin.
+
+### Manual build for Pages
+
+```bash
+VITE_BASE_PATH=/chatbot_frontend/ pnpm build
+```
+
+Output is in `dist/`.
