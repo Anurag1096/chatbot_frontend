@@ -1,0 +1,36 @@
+.message-list {
+  flex: 1;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding: 1rem 1.25rem 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .message-list {
+    padding: 0.75rem 1rem 0.5rem;
+  }
+}
+
+.message-list__empty {
+  margin: auto;
+  max-width: 34rem;
+  text-align: center;
+  color: var(--chat-muted);
+}
+
+.message-list__empty h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.35rem;
+  color: var(--chat-text);
+}
+
+.message-list__empty p {
+  margin: 0;
+  line-height: 1.5;
+}

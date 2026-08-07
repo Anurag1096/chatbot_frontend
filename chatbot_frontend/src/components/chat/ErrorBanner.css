@@ -1,0 +1,42 @@
+.error-banner {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 0 1.25rem;
+  padding: 0.65rem 0.85rem;
+  border: 1px solid var(--chat-error-border);
+  border-radius: 10px;
+  background: var(--chat-error-bg);
+  color: var(--chat-error-text);
+}
+
+.error-banner p {
+  margin: 0;
+  min-width: 0;
+  font-size: 0.875rem;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 768px) {
+  .error-banner {
+    margin: 0 1rem;
+  }
+}
+
+.error-banner__dismiss {
+  border: 1px solid var(--chat-error-border);
+  background: transparent;
+  color: inherit;
+  border-radius: 999px;
+  padding: 0.2rem 0.65rem;
+  font: inherit;
+  font-size: 0.8125rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.error-banner__dismiss:hover {
+  background: rgba(220, 38, 38, 0.08);
+}
