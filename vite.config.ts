@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite'
+import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
 import type { Plugin } from 'vite'
 import { handleMockChat } from './server/mockSseHandler.js'
@@ -21,4 +21,8 @@ function mockChatApiPlugin(): Plugin {
 
 export default defineConfig({
   plugins: [react(), mockChatApiPlugin()],
+  test: {
+    environment: 'node',
+    include: ['src/**/*.{test,spec}.{ts,tsx}'],
+  },
 })

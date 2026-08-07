@@ -1,8 +1,8 @@
-import { ChatPage } from './components/chat/ChatPage'
+import { WidgetHostPage } from './components/widget/WidgetHostPage'
 import './index.css'
 
 function App() {
-  return <ChatPage />
+  return <WidgetHostPage />
 }
 
 export default App

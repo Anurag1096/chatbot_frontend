@@ -1,0 +1,114 @@
+.widget-host {
+  min-height: 100dvh;
+  background:
+    linear-gradient(180deg, rgba(37, 99, 235, 0.06), transparent 280px),
+    var(--chat-bg);
+}
+
+.widget-host__nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--chat-border);
+  background: var(--chat-panel-bg);
+}
+
+.widget-host__logo {
+  font-weight: 700;
+  color: var(--chat-text);
+}
+
+.widget-host__nav nav {
+  display: flex;
+  gap: 1.25rem;
+}
+
+.widget-host__nav a {
+  color: var(--chat-muted);
+  text-decoration: none;
+  font-size: 0.9375rem;
+}
+
+.widget-host__nav a:hover {
+  color: var(--chat-accent);
+}
+
+.widget-host__main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 5rem;
+}
+
+.widget-host__hero {
+  max-width: 36rem;
+  margin-bottom: 3rem;
+}
+
+.widget-host__eyebrow {
+  margin: 0 0 0.5rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--chat-accent);
+}
+
+.widget-host__hero h1 {
+  margin: 0 0 0.75rem;
+  font-size: clamp(2rem, 5vw, 2.75rem);
+  letter-spacing: -0.03em;
+  color: var(--chat-text);
+}
+
+.widget-host__hero p {
+  margin: 0 0 1.25rem;
+  color: var(--chat-muted);
+  line-height: 1.6;
+}
+
+.widget-host__cta {
+  border: none;
+  border-radius: 999px;
+  padding: 0.65rem 1.25rem;
+  background: var(--chat-accent);
+  color: #fff;
+  cursor: pointer;
+}
+
+.widget-host__cta:hover {
+  filter: brightness(1.05);
+}
+
+.widget-host__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.widget-host__grid article {
+  padding: 1.25rem;
+  border: 1px solid var(--chat-border);
+  border-radius: 16px;
+  background: var(--chat-panel-bg);
+}
+
+.widget-host__grid h2 {
+  margin: 0 0 0.35rem;
+  font-size: 1rem;
+  color: var(--chat-text);
+}
+
+.widget-host__grid p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--chat-muted);
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .widget-host__nav nav {
+    display: none;
+  }
+}

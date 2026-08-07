@@ -36,6 +36,8 @@ VITE_API_BASE_URL=https://your-backend.example.com/api
 | `pnpm build` | Typecheck and production build |
 | `pnpm preview` | Preview production build |
 | `pnpm lint` | Run ESLint |
+| `pnpm test` | Run tests in watch mode |
+| `pnpm test:run` | Run tests once (CI) |
 
 ## Using the app
 
