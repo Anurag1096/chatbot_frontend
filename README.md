@@ -70,12 +70,19 @@ The repo includes a GitHub Actions workflow (`.github/workflows/deploy.yml`) tha
 ### One-time setup
 
 1. Open your repo on GitHub → **Settings** → **Pages**
-2. Under **Build and deployment**, set **Source** to **GitHub Actions**
-3. Push to `main`/`master` (or run the workflow manually from **Actions**)
+2. Under **Build and deployment**, set **Source** to **Deploy from a branch**
+3. Choose branch **`gh-pages`**, folder **`/ (root)`**, then **Save**
+4. Push to `master`/`main` — the workflow builds your React app and publishes `dist/` to `gh-pages`
 
 Your site will be published at:
 
-`https://<username>.github.io/chatbot_frontend/`
+`https://anurag1096.github.io/chatbot_frontend/`
+
+> **Important:** Do **not** use the `master` branch as the Pages source. That serves raw source files (`/src/main.tsx`) and the app will not load. The workflow builds the React app and deploys the compiled `dist/` folder to `gh-pages`.
+
+### Troubleshooting a blank page
+
+If View Source shows `<script src="/src/main.tsx">`, GitHub Pages is serving source files instead of the build. Switch Pages source to the **`gh-pages`** branch.
 
 ### Backend on production
 
