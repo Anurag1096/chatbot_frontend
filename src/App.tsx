@@ -1,18 +1,8 @@
-import { useState } from 'react'
-import './App.css'
+import { ChatPage } from './components/chat/ChatPage'
+import './index.css'
 
 function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <main className="app">
-      <h1>Chatbot</h1>
-      <p>React + TypeScript + Vite</p>
-      <button type="button" onClick={() => setCount((value) => value + 1)}>
-        Count is {count}
-      </button>
-    </main>
-  )
+  return <ChatPage />
 }
 
 export default App

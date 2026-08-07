@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local work documentation (not for version control)
+WORK_DOCUMENTATION.md
