@@ -1,12 +1,7 @@
 import type { ChatState, Conversation } from '../types/chat'
 import { createId } from './id'
 
-const STORAGE_KEY = 'chatbot_conversation_history'
-
-interface StoredState {
-  conversations: Conversation[]
-  activeConversationId: string
-}
+export const STORAGE_KEY = 'chatbot_conversation_history'
 
 export function createConversation(): Conversation {
   const now = Date.now()
@@ -26,43 +21,15 @@ export function truncateTitle(text: string, maxLength = 48): string {
   return `${trimmed.slice(0, maxLength - 1)}…`
 }
 
-export function loadStoredState(): StoredState | null {
+export function clearStoredState(): void {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY)
-    if (!raw) return null
-
-    const parsed = JSON.parse(raw) as StoredState
-    if (!parsed.conversations?.length || !parsed.activeConversationId) return null
-
-    return parsed
+    localStorage.removeItem(STORAGE_KEY)
   } catch {
-    return null
-  }
-}
-
-export function saveStoredState(state: ChatState): void {
-  try {
-    const payload: StoredState = {
-      conversations: state.conversations,
-      activeConversationId: state.activeConversationId,
-    }
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(payload))
-  } catch {
-    // Ignore quota or private-mode storage failures.
+    // Ignore private-mode storage failures.
   }
 }
 
 export function buildInitialState(): ChatState {
-  const stored = loadStoredState()
-  if (stored) {
-    return {
-      conversations: stored.conversations,
-      activeConversationId: stored.activeConversationId,
-      isStreaming: false,
-      globalError: null,
-    }
-  }
-
   const conversation = createConversation()
 
   return {

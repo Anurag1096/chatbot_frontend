@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useReducer, useRef } from 'react'
+import { useCallback, useMemo, useReducer, useRef } from 'react'
 import { sendChatMessage } from '../services/chatApi'
 import type {
   ChatAction,
@@ -10,7 +10,6 @@ import type {
 import {
   buildInitialState,
   createConversation,
-  saveStoredState,
   truncateTitle,
 } from '../utils/conversations'
 import { getErrorMessage, isAbortError } from '../utils/errors'
@@ -200,10 +199,6 @@ export function useChat() {
 
   const activeConversation = getActiveConversation(state)
   const messages = activeConversation?.messages ?? []
-
-  useEffect(() => {
-    saveStoredState(state)
-  }, [state])
 
   const conversations = useMemo(
     () =>
