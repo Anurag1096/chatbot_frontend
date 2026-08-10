@@ -25,8 +25,10 @@ cp .env.example .env
 By default the app uses a built-in mock API at `/api/chat`. To use a real backend:
 
 ```env
-VITE_API_BASE_URL=https://your-backend.example.com/api
+VITE_API_BASE_URL=http://127.0.0.1:8000
 ```
+
+Use the backend **root URL only** — the API is `POST /chat`, not `/api/chat`.
 
 ## Scripts
 
@@ -92,9 +94,9 @@ Set a repository variable (**Settings** → **Secrets and variables** → **Acti
 
 | Variable | Example |
 |----------|---------|
-| `VITE_API_BASE_URL` | `https://your-api.example.com/api` |
+| `VITE_API_BASE_URL` | `https://your-api.example.com` |
 
-Your backend must allow CORS from your GitHub Pages origin.
+Your backend must allow CORS from your GitHub Pages origin (e.g. set `CORS_ORIGINS=https://anurag1096.github.io` on the backend).
 
 ### Manual build for Pages
 

@@ -35,6 +35,19 @@ function mapActiveConversation(
   }
 }
 
+function mapConversation(
+  state: ChatState,
+  conversationId: string,
+  mapper: (conversation: Conversation) => Conversation,
+): ChatState {
+  return {
+    ...state,
+    conversations: state.conversations.map((conversation) =>
+      conversation.id === conversationId ? mapper(conversation) : conversation,
+    ),
+  }
+}
+
 function toHistory(messages: Message[]): HistoryMessage[] {
   return messages
     .filter(
@@ -70,7 +83,7 @@ function chatReducer(state: ChatState, action: ChatAction): ChatState {
         isStreaming: true,
       }
     case 'APPEND_DELTA':
-      return mapActiveConversation(state, (conversation) => ({
+      return mapConversation(state, action.conversationId, (conversation) => ({
         ...conversation,
         messages: conversation.messages.map((message) =>
           message.id === action.messageId
@@ -81,7 +94,7 @@ function chatReducer(state: ChatState, action: ChatAction): ChatState {
       }))
     case 'COMPLETE_MESSAGE':
       return {
-        ...mapActiveConversation(state, (conversation) => ({
+        ...mapConversation(state, action.conversationId, (conversation) => ({
           ...conversation,
           messages: conversation.messages.map((message) =>
             message.id === action.messageId
@@ -94,7 +107,7 @@ function chatReducer(state: ChatState, action: ChatAction): ChatState {
       }
     case 'FAIL_MESSAGE':
       return {
-        ...mapActiveConversation(state, (conversation) => ({
+        ...mapConversation(state, action.conversationId, (conversation) => ({
           ...conversation,
           messages: conversation.messages.map((message) =>
             message.id === action.messageId
@@ -115,7 +128,7 @@ function chatReducer(state: ChatState, action: ChatAction): ChatState {
       return { ...state, isStreaming: action.isStreaming }
     case 'RESET_ASSISTANT':
       return {
-        ...mapActiveConversation(state, (conversation) => ({
+        ...mapConversation(state, action.conversationId, (conversation) => ({
           ...conversation,
           messages: conversation.messages.map((message) =>
             message.id === action.messageId
@@ -227,15 +240,25 @@ export function useChat() {
           },
           signal: controller.signal,
           onChunk: (delta) => {
-            dispatch({ type: 'APPEND_DELTA', messageId: assistantId, delta })
+            dispatch({
+              type: 'APPEND_DELTA',
+              conversationId,
+              messageId: assistantId,
+              delta,
+            })
           },
         })
 
-        dispatch({ type: 'COMPLETE_MESSAGE', messageId: assistantId })
+        dispatch({
+          type: 'COMPLETE_MESSAGE',
+          conversationId,
+          messageId: assistantId,
+        })
       } catch (error) {
         if (isAbortError(error)) {
           dispatch({
             type: 'FAIL_MESSAGE',
+            conversationId,
             messageId: assistantId,
             error: 'Response cancelled.',
           })
@@ -243,7 +266,12 @@ export function useChat() {
         }
 
         const message = getErrorMessage(error)
-        dispatch({ type: 'FAIL_MESSAGE', messageId: assistantId, error: message })
+        dispatch({
+          type: 'FAIL_MESSAGE',
+          conversationId,
+          messageId: assistantId,
+          error: message,
+        })
         dispatch({ type: 'SET_GLOBAL_ERROR', error: message })
       } finally {
         abortRef.current = null
@@ -258,6 +286,7 @@ export function useChat() {
       if (!trimmed || state.isStreaming || !activeConversation) return
 
       const history = toHistory(messages)
+      const conversationId = activeConversation.id
       const userMessage: Message = {
         id: createId(),
         role: 'user',
@@ -281,7 +310,7 @@ export function useChat() {
         trimmed,
         history,
         assistantMessage.id,
-        activeConversation.id,
+        conversationId,
       )
     },
     [activeConversation, messages, state.isStreaming, streamAssistantReply],
@@ -305,14 +334,19 @@ export function useChat() {
       if (userMessage.role !== 'user') return
 
       const history = toHistory(messages.slice(0, assistantIndex - 1))
+      const conversationId = activeConversation.id
 
-      dispatch({ type: 'RESET_ASSISTANT', messageId: assistantMessageId })
+      dispatch({
+        type: 'RESET_ASSISTANT',
+        conversationId,
+        messageId: assistantMessageId,
+      })
 
       await streamAssistantReply(
         userMessage.content,
         history,
         assistantMessageId,
-        activeConversation.id,
+        conversationId,
       )
     },
     [activeConversation, messages, state.isStreaming, streamAssistantReply],

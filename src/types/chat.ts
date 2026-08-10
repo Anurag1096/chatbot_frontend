@@ -47,12 +47,12 @@ export interface ChatState {
 export type ChatAction =
   | { type: 'ADD_USER_MESSAGE'; message: Message }
   | { type: 'ADD_ASSISTANT_PLACEHOLDER'; message: Message }
-  | { type: 'APPEND_DELTA'; messageId: string; delta: string }
-  | { type: 'COMPLETE_MESSAGE'; messageId: string }
-  | { type: 'FAIL_MESSAGE'; messageId: string; error: string }
+  | { type: 'APPEND_DELTA'; conversationId: string; messageId: string; delta: string }
+  | { type: 'COMPLETE_MESSAGE'; conversationId: string; messageId: string }
+  | { type: 'FAIL_MESSAGE'; conversationId: string; messageId: string; error: string }
   | { type: 'SET_GLOBAL_ERROR'; error: string | null }
   | { type: 'SET_STREAMING'; isStreaming: boolean }
-  | { type: 'RESET_ASSISTANT'; messageId: string }
+  | { type: 'RESET_ASSISTANT'; conversationId: string; messageId: string }
   | { type: 'SELECT_CONVERSATION'; conversationId: string }
   | { type: 'NEW_CONVERSATION'; conversation: Conversation }
   | { type: 'DELETE_CONVERSATION'; conversationId: string }
