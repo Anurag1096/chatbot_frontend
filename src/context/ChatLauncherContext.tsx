@@ -2,7 +2,6 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useMemo,
   useState,
   type ReactNode,
@@ -12,7 +11,9 @@ import { useChat } from '../hooks/useChat'
 interface ChatLauncherContextValue {
   open: boolean
   setOpen: (open: boolean) => void
+  draftMessage: string | null
   requestPrompt: (prompt: string) => void
+  clearDraftMessage: () => void
   chat: ReturnType<typeof useChat>
 }
 
@@ -20,30 +21,28 @@ const ChatLauncherContext = createContext<ChatLauncherContextValue | null>(null)
 
 export function ChatLauncherProvider({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false)
-  const [pendingPrompt, setPendingPrompt] = useState<string | null>(null)
+  const [draftMessage, setDraftMessage] = useState<string | null>(null)
   const chat = useChat()
 
   const requestPrompt = useCallback((prompt: string) => {
-    setPendingPrompt(prompt.trim())
+    setDraftMessage(prompt.trim())
     setOpen(true)
   }, [])
 
-  useEffect(() => {
-    if (!open || !pendingPrompt || chat.isStreaming) return
-
-    const prompt = pendingPrompt
-    setPendingPrompt(null)
-    void chat.sendMessage(prompt)
-  }, [open, pendingPrompt, chat.isStreaming, chat.sendMessage])
+  const clearDraftMessage = useCallback(() => {
+    setDraftMessage(null)
+  }, [])
 
   const value = useMemo(
     () => ({
       open,
       setOpen,
+      draftMessage,
       requestPrompt,
+      clearDraftMessage,
       chat,
     }),
-    [open, requestPrompt, chat],
+    [open, draftMessage, requestPrompt, clearDraftMessage, chat],
   )
 
   return (

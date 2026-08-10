@@ -22,7 +22,7 @@ export function WidgetHostPage() {
           <h1>{BOOKSTORE_INTRO.title}</h1>
           <p>{BOOKSTORE_INTRO.description}</p>
           <p className="widget-host__hint">
-            Click any example question below to open the chat and ask it automatically.
+            Click any example question below to open the chat with it ready to send.
           </p>
         </section>
 

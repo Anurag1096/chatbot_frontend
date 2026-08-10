@@ -1,4 +1,4 @@
-import { useState, type FormEvent, type KeyboardEvent } from 'react'
+import { useEffect, useRef, useState, type FormEvent, type KeyboardEvent } from 'react'
 import './ChatInput.css'
 
 interface ChatInputProps {
@@ -6,6 +6,8 @@ interface ChatInputProps {
   isStreaming: boolean
   onSend: (text: string) => void
   onCancel: () => void
+  draftMessage?: string | null
+  onDraftApplied?: () => void
 }
 
 export function ChatInput({
@@ -13,8 +15,28 @@ export function ChatInput({
   isStreaming,
   onSend,
   onCancel,
+  draftMessage,
+  onDraftApplied,
 }: ChatInputProps) {
   const [value, setValue] = useState('')
+  const fieldRef = useRef<HTMLTextAreaElement>(null)
+
+  useEffect(() => {
+    if (!draftMessage) return
+
+    setValue(draftMessage)
+    onDraftApplied?.()
+
+    const frame = requestAnimationFrame(() => {
+      const field = fieldRef.current
+      if (!field) return
+      field.focus()
+      const length = draftMessage.length
+      field.setSelectionRange(length, length)
+    })
+
+    return () => cancelAnimationFrame(frame)
+  }, [draftMessage, onDraftApplied])
 
   const submit = () => {
     const trimmed = value.trim()
@@ -41,6 +63,7 @@ export function ChatInput({
         Message
       </label>
       <textarea
+        ref={fieldRef}
         id="chat-message"
         className="chat-input__field"
         rows={3}

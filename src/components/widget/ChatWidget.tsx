@@ -14,7 +14,8 @@ export function ChatWidget({
   title = 'Books to Scrape Assistant',
   subtitle = 'Search our demo catalog with natural language',
 }: ChatWidgetProps) {
-  const { open, setOpen, requestPrompt, chat } = useChatLauncher()
+  const { open, setOpen, requestPrompt, draftMessage, clearDraftMessage, chat } =
+    useChatLauncher()
 
   useEffect(() => {
     if (!open) return
@@ -59,6 +60,8 @@ export function ChatWidget({
               isStreaming={chat.isStreaming}
               onSend={chat.sendMessage}
               onCancel={chat.cancel}
+              draftMessage={draftMessage}
+              onDraftApplied={clearDraftMessage}
             />
           </div>
         </section>
