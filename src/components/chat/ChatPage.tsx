@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
+import { BOOKSTORE_INTRO } from '../../config/bookstorePrompts'
 import { useChat } from '../../hooks/useChat'
 import { ChatInput } from './ChatInput'
 import { ErrorBanner } from './ErrorBanner'
@@ -144,15 +145,19 @@ export function ChatPage() {
             </button>
 
             <div>
-              <h1>Chat</h1>
-              <p className="chat-page__subtitle">Streaming assistant powered by SSE</p>
+              <h1>{BOOKSTORE_INTRO.title}</h1>
+              <p className="chat-page__subtitle">{BOOKSTORE_INTRO.tagline}</p>
             </div>
           </div>
         </header>
 
         <ErrorBanner message={globalError ?? ''} onDismiss={clearError} />
 
-        <MessageList messages={messages} onRetry={retry} />
+        <MessageList
+          messages={messages}
+          onRetry={retry}
+          onSuggestionClick={sendMessage}
+        />
 
         <ChatInput
           disabled={isStreaming}

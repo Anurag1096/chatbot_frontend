@@ -31,6 +31,41 @@
 }
 
 .message-list__empty p {
-  margin: 0;
+  margin: 0 0 1rem;
   line-height: 1.5;
+}
+
+.message-list__suggestions {
+  margin-top: 1.25rem;
+  text-align: left;
+}
+
+.message-list__suggestions-label {
+  margin: 0 0 0.5rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--chat-muted);
+}
+
+.message-list__suggestion-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.message-list__suggestion {
+  border: 1px solid var(--chat-border);
+  border-radius: 12px;
+  padding: 0.65rem 0.85rem;
+  background: var(--chat-panel-bg);
+  color: var(--chat-text);
+  font: inherit;
+  font-size: 0.875rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.message-list__suggestion:hover {
+  border-color: var(--chat-accent);
+  color: var(--chat-accent);
 }

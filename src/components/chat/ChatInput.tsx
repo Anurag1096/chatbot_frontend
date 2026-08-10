@@ -47,7 +47,7 @@ export function ChatInput({
         value={value}
         onChange={(event) => setValue(event.target.value)}
         onKeyDown={handleKeyDown}
-        placeholder="Ask a question… (Enter to send, Shift+Enter for newline)"
+        placeholder="Ask about books, genres, prices… (Enter to send)"
         disabled={disabled}
       />
 

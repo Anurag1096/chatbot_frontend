@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { useChat } from '../../hooks/useChat'
+import { useEffect } from 'react'
+import { useChatLauncher } from '../../context/ChatLauncherContext'
 import { ChatInput } from '../chat/ChatInput'
 import { ErrorBanner } from '../chat/ErrorBanner'
 import { MessageList } from '../chat/MessageList'
@@ -11,11 +11,10 @@ interface ChatWidgetProps {
 }
 
 export function ChatWidget({
-  title = 'Chat assistant',
-  subtitle = 'Ask us anything',
+  title = 'Books to Scrape Assistant',
+  subtitle = 'Search our demo catalog with natural language',
 }: ChatWidgetProps) {
-  const [open, setOpen] = useState(false)
-  const chat = useChat()
+  const { open, setOpen, requestPrompt, chat } = useChatLauncher()
 
   useEffect(() => {
     if (!open) return
@@ -49,7 +48,12 @@ export function ChatWidget({
 
           <div className="chat-widget__body">
             <ErrorBanner message={chat.globalError ?? ''} onDismiss={chat.clearError} />
-            <MessageList messages={chat.messages} onRetry={chat.retry} />
+            <MessageList
+              messages={chat.messages}
+              onRetry={chat.retry}
+              onSuggestionClick={requestPrompt}
+              isActive={open}
+            />
             <ChatInput
               disabled={chat.isStreaming}
               isStreaming={chat.isStreaming}
@@ -63,7 +67,7 @@ export function ChatWidget({
       <button
         type="button"
         className="chat-widget__launcher"
-        onClick={() => setOpen((current) => !current)}
+        onClick={() => setOpen(!open)}
         aria-label={open ? 'Close chat' : 'Open chat'}
         aria-expanded={open}
       >

@@ -63,9 +63,53 @@
 }
 
 .widget-host__hero p {
-  margin: 0 0 1.25rem;
+  margin: 0 0 1rem;
   color: var(--chat-muted);
   line-height: 1.6;
+}
+
+.widget-host__hint {
+  font-size: 0.9375rem;
+}
+
+.widget-host__examples {
+  margin-bottom: 2.5rem;
+}
+
+.widget-host__examples h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1.125rem;
+  color: var(--chat-text);
+}
+
+.widget-host__example-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.widget-host__example-list li {
+  margin: 0;
+}
+
+.widget-host__example-button {
+  width: 100%;
+  border: 1px solid var(--chat-border);
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  background: var(--chat-panel-bg);
+  color: var(--chat-text);
+  font: inherit;
+  font-size: 0.9375rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.widget-host__example-button:hover {
+  border-color: var(--chat-accent);
+  color: var(--chat-accent);
 }
 
 .widget-host__cta {
